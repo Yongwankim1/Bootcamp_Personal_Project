@@ -4,6 +4,7 @@ using UnityEngine;
 public struct DropTable
 {
     public ItemScriptable DropItem;
+    public int Amount;
     public float Percent;
 }
 
@@ -12,10 +13,10 @@ public class EnemyInventory : MonoBehaviour, IInteractable
     [SerializeField] DropTable[] dropTable = new DropTable[0];
     [SerializeField] EnemyHP enemyHP;
     [SerializeField] Collider2D myColider2D;
-    [SerializeField] List<ItemScriptable> dropList = new List<ItemScriptable>();
+    [SerializeField] List<DropTable> dropList = new List<DropTable>();
     [SerializeField] InventoryGUI inventoryGUI;
 
-
+    public List<DropTable> DropList => dropList;
     void Awake()
     {
         if(enemyHP == null) enemyHP = GetComponent<EnemyHP>();
@@ -55,7 +56,7 @@ public class EnemyInventory : MonoBehaviour, IInteractable
 
             if (rand < dropTable[i].Percent)
             {
-                dropList.Add(dropTable[i].DropItem);
+                dropList.Add(dropTable[i]);
             }
         }
     }
@@ -72,7 +73,7 @@ public class EnemyInventory : MonoBehaviour, IInteractable
         if (playerInventory == null || inventoryGUI == null) return;
         
         playerInventory.OnInventory();
-        inventoryGUI.OnEnemyInventory();
+        inventoryGUI.OnEnemyInventory(this);
     }
 
     public void ListRemove()

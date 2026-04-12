@@ -16,7 +16,7 @@ public class SlotUI : MonoBehaviour
 
     public SlotData SlotData;
     
-    private void Initialize()
+    public void Initialize()
     {
         SlotData = new SlotData();
         iconImage.gameObject.SetActive(false);

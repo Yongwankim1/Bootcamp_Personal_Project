@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryGUI : MonoBehaviour
@@ -9,7 +10,7 @@ public class InventoryGUI : MonoBehaviour
     [SerializeField] SlotUI slotUIPrefab;
 
     [SerializeField] GameObject enemyInventoryUI;
-
+    [SerializeField] EnemyInventory enemyInventory;
     private SlotUI[] slots;
     private SlotUI[] enemySlots;
 
@@ -50,7 +51,7 @@ public class InventoryGUI : MonoBehaviour
             enemyInventoryUI.SetActive(false);
         }
     }
-    public void OnEnemyInventory()
+    public void OnEnemyInventory(EnemyInventory enemyInventory)
     {
         if (enemyInventoryUI == null)
         {
@@ -58,10 +59,38 @@ public class InventoryGUI : MonoBehaviour
             return;
         }
         enemyInventoryUI.SetActive(true);
+        this.enemyInventory = enemyInventory;
+        EnemyDrawAllSlot();
+    }
+    void EnemyDrawAllSlot()
+    {
+        if (enemyInventoryUI == null) return;
+
+        int index = 0;
+        for (index = 0; index < enemyInventory.DropList.Count; index++)
+        {
+            if (enemySlots[index] == null)
+            {
+                enemySlots[index] = Instantiate(slotUIPrefab, enemyInventoryUI.transform.GetChild(0).transform);
+                enemySlots[index].Initialize(enemyInventory.DropList[index].DropItem.ItemData.ItemID, enemyInventory.DropList[index].Amount, this);
+            }
+            {
+                slots[index].Initialize(enemyInventory.DropList[index].DropItem.ItemData.ItemID, enemyInventory.DropList[index].Amount, this);
+            }
+        }
+        for(int i = index; i < enemySlots.Length; i++)
+        {
+            if (enemySlots[i] == null) continue;
+            enemySlots[i].Initialize();
+        }
     }
     private void BackPackSlotChanage()
     {
         if (inventory == null) return;
+        for(int i = slots.Length -1;  i >= 0; i--)
+        {
+            Destroy(slots[i]);
+        }
         slots = new SlotUI[inventory.ItemPositiones.Length];
         DrawAllSlot();
     }

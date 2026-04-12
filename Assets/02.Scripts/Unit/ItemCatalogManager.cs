@@ -1,0 +1,86 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ItemCatalogManager : MonoBehaviour
+{
+    public static ItemCatalogManager Instance;
+
+    [Header("Weapon")]
+    [SerializeField] private List<ItemScriptable> registeredMeleeWeaponData = new List<ItemScriptable>();
+    [SerializeField] private List<ItemScriptable> registeredRangeWeaponData = new List<ItemScriptable>();
+    [Header("Armor")]
+    [SerializeField] private List<ItemScriptable> registeredHelmetData = new List<ItemScriptable>();
+    [SerializeField] private List<ItemScriptable> registeredBodyData = new List<ItemScriptable>();
+    [Header("Bullet")]
+    [SerializeField] private List<ItemScriptable> registeredBulletData = new List<ItemScriptable>();
+    [Header("HealType")]
+    [SerializeField] private List<ItemScriptable> registeredHPHealData = new List<ItemScriptable>();
+    [SerializeField] private List<ItemScriptable> registeredBandageData = new List<ItemScriptable>();
+    [SerializeField] private List<ItemScriptable> registeredSplintData = new List<ItemScriptable>();
+    [Header("Syringe")]
+    [SerializeField] private List<ItemScriptable> registeredVaccineData = new List<ItemScriptable>();
+    [SerializeField] private List<ItemScriptable> registeredHealingData = new List<ItemScriptable>();
+    [Header("Material")]
+    [SerializeField] private List<ItemScriptable> registeredMaterialData = new List<ItemScriptable>();
+
+
+
+    private Dictionary<string,ItemData> itemIdByItemData = new Dictionary<string,ItemData>();
+
+    private void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    private void Start()
+    {
+        RegisterAddData(registeredMeleeWeaponData);
+        RegisterAddData(registeredRangeWeaponData);
+        RegisterAddData(registeredHelmetData);
+        RegisterAddData(registeredBodyData);
+        RegisterAddData(registeredBulletData);
+        RegisterAddData(registeredHPHealData);
+        RegisterAddData(registeredBandageData);
+        RegisterAddData(registeredSplintData);
+        RegisterAddData(registeredVaccineData);
+        RegisterAddData(registeredHealingData);
+        RegisterAddData(registeredMaterialData);
+    }
+    private void RegisterAddData(List<ItemScriptable> list)
+    {
+        for(int i = 0; i < list.Count; i++)
+        {
+            itemIdByItemData.Add(list[i].ItemData.ItemID, list[i].ItemData);
+        }
+    }
+    public bool IsRegisteredItem(string itemID)
+    {
+        if(itemIdByItemData.ContainsKey(itemID))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool TryGetItemData(string itemID, out ItemData itemData)
+    {
+        itemData = new ItemData();
+        if (string.IsNullOrEmpty(itemID)) return false;
+        if (itemIdByItemData.ContainsKey(itemID))
+        {
+            itemData = itemIdByItemData[itemID];
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+}

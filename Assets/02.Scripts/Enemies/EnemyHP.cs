@@ -4,7 +4,7 @@ public class EnemyHP : CharacterHP
 {
     [SerializeField] EnemyLevelScriptable levelScriptable;
 
-    private void Awake()
+    private void Start()
     {
         Initialize();
     }

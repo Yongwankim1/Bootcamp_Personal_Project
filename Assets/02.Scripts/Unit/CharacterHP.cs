@@ -6,22 +6,12 @@ public class CharacterHP : MonoBehaviour, IDamageable
     [SerializeField] protected float currentHP;
     [SerializeField] protected float maxHP;
     [SerializeField] Animator animator;
-    [SerializeField] string onDieParameterName = "OnDie";
-    private int dieHash;
+
     public bool IsDead => currentHP <= 0;
     public event Action OnDied;
-    public event Action OnHit;
-    void Awake()
-    {
-        if(animator == null)
-            animator = GetComponent<Animator>();
+    public event Action<float> OnHit;
 
-    }
-    void Start()
-    {
-        dieHash = Animator.StringToHash(onDieParameterName);
-    }
-    public void TakeDamage(float amount)
+    public virtual void TakeDamage(float amount)
     {
         if(IsDead || amount <= 0) return;
 
@@ -33,10 +23,10 @@ public class CharacterHP : MonoBehaviour, IDamageable
             Died();
             return;
         }
-        OnHit?.Invoke();
+        OnHit?.Invoke(amount);
     }
 
-    public void Heal(int amount)
+    public virtual void Heal(int amount)
     {
         if (IsDead || amount <= 0) return;
 
@@ -46,10 +36,9 @@ public class CharacterHP : MonoBehaviour, IDamageable
 
     protected virtual void Died()
     {
-        animator.SetTrigger(dieHash);
+        //TODO:Á×¾úÀ» ¶§
         OnDied?.Invoke();
         
-        //TODO:Á×¾úÀ» ¶§
 
     }
 

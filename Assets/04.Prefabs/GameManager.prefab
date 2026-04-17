@@ -1,0 +1,451 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2288621133303722011
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8044153273165699177}
+  - component: {fileID: 3754756961317152992}
+  - component: {fileID: 973213839924599148}
+  - component: {fileID: 2492238738840354527}
+  - component: {fileID: 1531372167918526304}
+  - component: {fileID: 5861801724813134050}
+  - component: {fileID: 3874360626030423967}
+  - component: {fileID: 3568108005025558476}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8044153273165699177
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2288621133303722011}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.4405, y: -2.34435, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3754756961317152992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2288621133303722011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9984315e228a4d147af1d1bfa87ce218, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+--- !u!114 &973213839924599148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2288621133303722011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89499974d9f48694a90f6514642db0fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  baseBackPack: []
+--- !u!114 &2492238738840354527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2288621133303722011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12dc1ce92a58e07498b8c192a91b4e32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  MaxHP: 100
+  CurrentHP: 100
+  StaminaPoint: 100
+  CurrentStamina: 0
+  AttackDamage: 0
+--- !u!114 &1531372167918526304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2288621133303722011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50cc12d7003a0ac4bbf352005fa02871, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  slotMaxIndex: 100
+  slotUIs:
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+  - ItemID: 
+    Amount: 0
+    MaxAmount: 0
+--- !u!114 &5861801724813134050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2288621133303722011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab309bc6d3969e2479137f61dbbfbd4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  WeaponID: 
+  HeadArmorID: 
+--- !u!114 &3874360626030423967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2288621133303722011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37a2e44dcb8ce8f48bf12ab5308517b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  playDay: 0
+  timeLightingValue: 0
+  cycleDuration: 1800
+--- !u!114 &3568108005025558476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2288621133303722011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 454aabfc578265843b78a02fd52b4548, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  stages:
+  - IsWaterRepair: 0
+    IsPowerRepair: 0
+    IsBossDie: 0
+  - IsWaterRepair: 1
+    IsPowerRepair: 1
+    IsBossDie: 0
+  - IsWaterRepair: 1
+    IsPowerRepair: 1
+    IsBossDie: 0
+  - IsWaterRepair: 1
+    IsPowerRepair: 1
+    IsBossDie: 0
+  CurrentStage: 0

@@ -1,48 +1,71 @@
-using UnityEngine;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using UnityEngine;
+
 [System.Serializable]
 public struct ItemPositiones
 {
     public string ItemID;
     public int Amount;
     public int MaxAmount;
+
+    public void SetItemPositiones(string itemID, int amount)
+    {
+        ItemID = itemID;
+        Amount = amount;
+        if (!ItemCatalogManager.Instance.TryGetItemData(itemID, out var data)) return;
+
+        MaxAmount = data.MaxStack;
+    }
 }
 public class Inventory : MonoBehaviour
 {
-    [SerializeField] string backpackID;
-    [SerializeField] ItemPositiones[] itemPositiones;
-    [SerializeField] PlayerInputReader inputReader;
-    [SerializeField] InventoryGUI inventoryGUI;
+    [SerializeField] protected string backpackID;
+    [SerializeField] protected ItemPositiones[] itemPositiones;
+
     public ItemPositiones[] ItemPositiones => itemPositiones;
 
-    Dictionary<string, int> itemIdByCount = new Dictionary<string, int>();
+    protected Dictionary<string, int> itemIdByCount = new Dictionary<string, int>();
     public Dictionary<string,int> ItemIdByCount => itemIdByCount;
 
     public event Action OnChangeItem;
     public event Action OnBackPackChanage;
     private void RaiseOnChanageItem() => OnChangeItem?.Invoke();
     private void RaiseOnBackPackChange() => OnBackPackChanage?.Invoke();
-    private void Awake()
-    {
-        if(inputReader == null) inputReader.GetComponent<PlayerInputReader>();
-        if (inventoryGUI == null) inventoryGUI = GameObject.Find("InventoryPanel").GetComponent<InventoryGUI>();
-    }
+
     private void Start()
+    {
+        //Init();
+    }
+    private void OnEnable()
     {
         Init();
     }
-    private void Update()
+    protected void Init()
     {
-        if (inputReader == null) return;
-        if(inputReader.IsInventoryPerformedThisFrame)
+        if(PlayerInventoryData.Instance != null)
         {
-            inventoryGUI.gameObject.SetActive(!inventoryGUI.gameObject.activeSelf);
+            itemIdByCount.Clear();
+            itemPositiones = PlayerInventoryData.Instance.BaseBackPack;
+            for(int i =0; i < itemPositiones.Length; i++)
+            {
+                if (string.IsNullOrEmpty(itemPositiones[i].ItemID)) continue;
+                if (itemIdByCount.ContainsKey(itemPositiones[i].ItemID))
+                {
+                    itemIdByCount[itemPositiones[i].ItemID] += itemPositiones[i].Amount;
+                }
+                else
+                {
+                    itemIdByCount.Add(itemPositiones[i].ItemID, itemPositiones[i].Amount);
+                }
+            }
         }
-    }
-    void Init()
-    {
-        itemPositiones = new ItemPositiones[8];
+        else
+        {
+            itemPositiones = new ItemPositiones[8];
+        }
+        //AddItem("head01", 2);
+
         RaiseOnBackPackChange();
     }
     public void Init(string backpackID)
@@ -53,15 +76,67 @@ public class Inventory : MonoBehaviour
             return;
         }
         this.backpackID = backpackID;
+        ItemPositiones[] items = itemPositiones;
+
         itemPositiones = new ItemPositiones[itemData.Value1];
+
+        for(int i = 0; i < items.Length; i++)
+        {
+            itemPositiones[i] = items[i];
+        }
         RaiseOnBackPackChange();
     }
     public int AddItem(string itemId, int amount)
     {
         return IncreaseItem(itemId, amount);
     }
+    public void AddItem(string itemId, int amount, int index)
+    {
+        if (string.IsNullOrEmpty(itemId)) return;
 
-    private int IncreaseItem(string itemId, int amount)
+        if (!string.IsNullOrEmpty(itemPositiones[index].ItemID)) return;
+
+        itemPositiones[index].SetItemPositiones(itemId, amount);
+        if (itemIdByCount.ContainsKey(itemId))
+        {
+            ItemIdByCount[itemId] += amount;
+        }
+        else
+        {
+            ItemIdByCount.Add(itemId, amount);
+        }
+        RaiseOnChanageItem();
+    }
+    public bool UseItem(string itemid, int index, int amount)
+    {
+        return DecreaseItem(itemid,index, amount);
+    }
+    public void PositionChange(int drag, int drop)
+    {
+        ItemPositiones dragPos = itemPositiones[drag];
+        ItemPositiones dropPos = itemPositiones[drop];
+
+        itemPositiones[drag] = dropPos;
+        itemPositiones[drop] = dragPos;
+
+
+        RaiseOnChanageItem();
+        Debug.Log("Ã¼ÀÎÁö");
+    }
+    public int RemainingBagCount()
+    {
+        int count = 0;
+        for(int i =0; i < itemPositiones.Length; i++)
+        {
+            if (string.IsNullOrEmpty(itemPositiones[i].ItemID))
+            {
+                count++;
+            }
+        }
+        Debug.Log(count);
+        return count;
+    }
+    protected int IncreaseItem(string itemId, int amount)
     {
         if (amount <= 0) return 0;
         if (!ItemCatalogManager.Instance.TryGetItemData(itemId, out var data)) return amount;
@@ -125,11 +200,19 @@ public class Inventory : MonoBehaviour
         return restAmount;
     }
 
-    private void DecreaseItem(string itemId, int amount)
+    protected bool DecreaseItem(string itemId,int index ,int amount)
     {
-        if (amount <= 0) return;
+        if (amount <= 0) return false;
+        if (itemPositiones[index].ItemID != itemId) return false;
+        if (itemPositiones[index].Amount - amount < 0) return false;
 
-        if(itemIdByCount.ContainsKey(itemId))
+        itemPositiones[index].Amount -= amount;
+        if (itemPositiones[index].Amount <= 0)
+        {
+            itemPositiones[index] = default;
+        }
+
+        if (itemIdByCount.ContainsKey(itemId))
         {
             itemIdByCount[itemId] -= amount;
             if (itemIdByCount[itemId] <= 0)
@@ -137,14 +220,89 @@ public class Inventory : MonoBehaviour
                 itemIdByCount.Remove(itemId);
             }
         }
+        if (ItemCatalogManager.Instance.TryGetItemClass(itemId, out var itemClass))
+        {
+            itemClass.Use(this);
+        }
         RaiseOnChanageItem();
+        return true;
     }
-
-    public void OnInventory()
+    public void RemoveItem(string itemId, int amount)
     {
-        if (inventoryGUI == null) return;
+        if (amount < 0) return;
+        if (!itemIdByCount.ContainsKey(itemId))
+        {
+            return;
+        }
 
-        inventoryGUI.gameObject.SetActive(!inventoryGUI.gameObject.activeSelf);
+        itemIdByCount[itemId] -= amount;
+        if (itemIdByCount[itemId] <= 0)
+        {
+            itemIdByCount.Remove(itemId);
+        }
+        int canAmount;
+        for(int i = itemPositiones.Length -1; i >= 0; i--)
+        {
+            if (itemPositiones[i].ItemID != itemId) continue;
+            canAmount = itemPositiones[i].Amount;
+            itemPositiones[i].Amount -= canAmount;
+            if (itemPositiones[i].Amount <= 0)
+            {
+                itemPositiones[i] = new ItemPositiones();
+            }
+            amount -= canAmount;
+            if(amount <= 0)
+            {
+                break;
+            }
+        }
 
+
+        RaiseOnChanageItem();
+        return;
+    }
+    public bool RemoveItem(string itemId, int index, int amount)
+    {
+        if (amount <= 0) return false;
+        if (itemPositiones[index].ItemID != itemId) return false;
+        if (itemPositiones[index].Amount - amount < 0) return false;
+        if (!itemIdByCount.ContainsKey(itemId))
+        {
+            return false;
+        }
+
+        itemIdByCount[itemId] -= amount;
+        if (itemIdByCount[itemId] <= 0)
+        {
+            itemIdByCount.Remove(itemId);
+        }
+        itemPositiones[index].Amount -= amount;
+        if (itemPositiones[index].Amount <= 0)
+        {
+            itemPositiones[index] = default;
+        }
+
+
+        RaiseOnChanageItem();
+        return true;
+    }
+    [ContextMenu("PrintItem")]
+    private void DebugInventory()
+    {
+        foreach (var item in ItemIdByCount)
+        {
+            Debug.Log(item.Key + " : " + item.Value);
+        }
+    }
+    public bool CheckItem(string itemID, int amount)
+    {
+        if (itemIdByCount.ContainsKey(itemID))
+        {
+            if (itemIdByCount[itemID] >= amount)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

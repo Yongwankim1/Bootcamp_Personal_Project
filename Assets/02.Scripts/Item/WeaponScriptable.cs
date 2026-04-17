@@ -7,7 +7,6 @@ public class WeaponScriptable : ItemScriptable, IAttack
 
     public void Attack(Transform attackTransform, float attackDistance, Vector3 mouseWorldPos, LayerMask targetLayer)
     {
-        Debug.Log("½ÇÇàµÊ");
         Vector3 dir = mouseWorldPos - attackTransform.position;
         Vector3 attackPosition = attackTransform.position + dir.normalized * attackDistance;
 
@@ -24,7 +23,7 @@ public class WeaponScriptable : ItemScriptable, IAttack
         go.transform.rotation = Quaternion.Euler(0f, 0f, angle);
         go.SetActive(true);
     }
-    public override void Use()
+    public override void Use(Inventory inventory)
     {
         
     }

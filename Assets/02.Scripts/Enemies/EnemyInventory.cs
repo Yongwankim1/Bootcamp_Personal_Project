@@ -3,8 +3,10 @@ using UnityEngine;
 [System.Serializable]
 public struct DropTable
 {
-    public ItemScriptable DropItem;
+    public string DropItemID;
     public int Amount;
+    public float CheckTimer;
+    public bool IsCheck;
     public float Percent;
 }
 
@@ -21,7 +23,7 @@ public class EnemyInventory : MonoBehaviour, IInteractable
     {
         if(enemyHP == null) enemyHP = GetComponent<EnemyHP>();
         if(myColider2D == null) myColider2D = GetComponent<Collider2D>();
-        if(inventoryGUI == null) inventoryGUI = GameObject.Find("InventoryPanel").GetComponent<InventoryGUI>();
+        if (inventoryGUI == null) inventoryGUI = FindFirstObjectByType<InventoryGUI>(FindObjectsInactive.Include);
     }
     void OnEnable()
     {
@@ -47,6 +49,8 @@ public class EnemyInventory : MonoBehaviour, IInteractable
     {
         for (int i = 0; i < dropTable.Length; i++)
         {
+            if (!ItemCatalogManager.Instance.IsRegisteredItem(dropTable[i].DropItemID)) continue;
+
             if (dropTable[i].Percent <= 0)
             {
                 Debug.LogWarning($"{dropTable[i]} 드랍률이 0퍼센트 이하입니다");
@@ -68,16 +72,24 @@ public class EnemyInventory : MonoBehaviour, IInteractable
     private void InventoryOpen(PlayerInteract player)
     {
         if (!enemyHP.IsDead) return;
-        Inventory playerInventory = player.GetComponentInParent<Inventory>();
+        InventoryAction playerInventoryAction = player.GetComponent<InventoryAction>();
 
-        if (playerInventory == null || inventoryGUI == null) return;
+        if (playerInventoryAction == null || inventoryGUI == null) return;
         
-        playerInventory.OnInventory();
+        playerInventoryAction.OnInventory();
         inventoryGUI.OnEnemyInventory(this);
     }
-
-    public void ListRemove()
+    public void ListAddItem(string itemID, int amount)
     {
-
+        DropTable item = default;
+        item.DropItemID = itemID;
+        item.Amount = amount;
+        dropList.Add(item);
+        inventoryGUI.OnEnemyInventory(this);
+    }
+    public void ListRemove(int index)
+    {
+        dropList.RemoveAt(index);
+        inventoryGUI.OnEnemyInventory(this);
     }
 }

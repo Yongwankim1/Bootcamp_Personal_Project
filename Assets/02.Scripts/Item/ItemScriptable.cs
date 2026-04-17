@@ -4,5 +4,5 @@ public abstract class ItemScriptable : ScriptableObject
 {
     public ItemData ItemData;
 
-    public abstract void Use();
+    public abstract void Use(Inventory inventory);
 }

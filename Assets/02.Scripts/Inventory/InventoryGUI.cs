@@ -1,0 +1,144 @@
+using System.Collections;
+using UnityEngine;
+
+public class InventoryGUI : MonoBehaviour
+{
+    [Header("Ref")]
+    [SerializeField] PlayerInputReader inputReader;
+    [SerializeField] Inventory inventory;
+    [SerializeField] Transform slotParent;
+    [SerializeField] SlotUI slotUIPrefab;
+
+    [SerializeField] GameObject enemyInventoryUI;
+    [SerializeField] EnemyInventory enemyInventory;
+    [SerializeField] ItemSlotManager slotManager;
+
+    private SlotUI[] slots;
+    private SlotUI[] enemySlots;
+
+
+    private void Awake()
+    {
+        if (inventory == null)
+        {
+            inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+        }
+        if(inputReader == null) Debug.LogWarning("인풋 리더 없음");
+        if(slotManager == null) slotManager = GetComponent<ItemSlotManager>();
+        slots = new SlotUI[0];
+        enemySlots = new SlotUI[10];
+    }
+    private void OnEnable()
+    {
+        if (inputReader != null) inputReader.DontAction.Push(true);
+        if (enemyInventoryUI != null) enemyInventoryUI.SetActive(false);
+        if(inventory != null)
+        {
+            inventory.OnBackPackChanage += BackPackSlotChanage;
+            inventory.OnChangeItem += DrawAllSlot;
+        }
+        if(slots.Length == 0) BackPackSlotChanage();
+        DrawAllSlot();
+    }
+
+    private void OnDisable()
+    {
+        if (inputReader != null) inputReader.DontAction.Pop();
+        if (inventory != null)
+        {
+            inventory.OnBackPackChanage -= BackPackSlotChanage;
+            inventory.OnChangeItem -= DrawAllSlot;
+        }
+        if(enemyInventoryUI != null)
+        {
+            enemyInventory = null;
+            enemyInventoryUI.SetActive(false);
+        }
+    }
+    public void OnEnemyInventory(EnemyInventory enemyInventory)
+    {
+        if (enemyInventoryUI == null)
+        {
+            Debug.LogWarning("적 인벤토리 참조 안됨");
+            return;
+        }
+        this.enemyInventory = enemyInventory;
+        slotManager.Initialize(enemyInventory);
+        enemyInventoryUI.SetActive(true);
+        EnemyDrawAllSlot();
+    }
+    Coroutine enemyDrawSlots;
+    private void EnemyDrawAllSlot()
+    {
+        if(enemyDrawSlots == null)
+        {
+            enemyDrawSlots = StartCoroutine(EnemyDrawAllSlots());
+        }
+        else
+        {
+            StopCoroutine(enemyDrawSlots);
+            enemyDrawSlots = StartCoroutine(EnemyDrawAllSlots());
+        }
+    }
+    IEnumerator EnemyDrawAllSlots()
+    {
+        if (enemyInventoryUI == null) yield break;
+
+        int index;
+        for (int i = 0; i < enemySlots.Length; i++)
+        {
+            if (enemySlots[i] == null)
+            {
+                enemySlots[i] = Instantiate(slotUIPrefab, enemyInventoryUI.transform.GetChild(0).transform);
+            }
+            enemySlots[i].Initialize(SlotType.Enemy, i);
+        }
+
+        for (index = 0; index < enemyInventory.DropList.Count; index++)
+        {
+            if (enemyInventory.DropList[index].IsCheck == false)
+            {
+                enemySlots[index].OnCheck();
+                yield return new WaitForSeconds(enemyInventory.DropList[index].CheckTimer);
+                DropTable dropTable = enemyInventory.DropList[index];
+                dropTable.IsCheck = true;
+
+                enemyInventory.DropList[index] = dropTable;
+                enemySlots[index].IsCheck(enemyInventory.DropList[index].IsCheck);
+            }
+            enemySlots[index].Initialize(enemyInventory.DropList[index].DropItemID, enemyInventory.DropList[index].Amount, SlotType.Enemy, index);
+        }
+        enemyDrawSlots = null;
+    }
+
+    private void BackPackSlotChanage()
+    {
+        if (inventory == null) return;
+        for(int i = slots.Length -1;  i >= 0; i--)
+        {
+            Destroy(slots[i].gameObject);
+        }
+        slots = new SlotUI[inventory.ItemPositiones.Length];
+        DrawAllSlot();
+    }
+
+    void DrawAllSlot()
+    {
+        if (inventory == null) return;
+        for(int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i] == null)
+            {
+                slots[i] = Instantiate(slotUIPrefab, slotParent);
+                slots[i].Initialize(inventory.ItemPositiones[i].ItemID, inventory.ItemPositiones[i].Amount, SlotType.Player,i);
+            }
+            else
+            {
+                slots[i].Initialize(inventory.ItemPositiones[i].ItemID, inventory.ItemPositiones[i].Amount, SlotType.Player,i);
+            }
+        }
+    }
+
+
+
+}

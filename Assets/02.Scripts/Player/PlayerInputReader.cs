@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput)),DefaultExecutionOrder(-1000)]
@@ -28,7 +29,7 @@ public class PlayerInputReader : MonoBehaviour
     public bool IsAttackPerformedThisFrame { get; private set; }
     public bool IsInventoryPerformedThisFrame {  get; private set; }
 
-    public bool DontAction { get; set; }
+    public Stack<bool> DontAction = new Stack<bool>();
     #endregion
 
 
@@ -42,12 +43,11 @@ public class PlayerInputReader : MonoBehaviour
     private void Update()
     {
         IsInventoryPerformedThisFrame = inventoryAction != null && inventoryAction.WasPerformedThisFrame();
-        if (DontAction)
+        if (DontAction.Count > 0)
         {
             IsAttackPerformedThisFrame = false;
             IsInteractPerformedThisFrame = false;
             MoveDir = Vector2.zero;
-            IsLightingToggle = false;
             return;
         }
         MoveDir = moveAction.ReadValue<Vector2>().normalized;
@@ -78,5 +78,29 @@ public class PlayerInputReader : MonoBehaviour
             Debug.LogWarning("액션을 찾을 수 없습니다");
         }
         return action;
+    }
+
+    public bool MoveAction()
+    {
+        if(MoveDir.sqrMagnitude > 0.01f)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool RunAction()
+    {
+        if (MoveDir.sqrMagnitude > 0.01f && Keyboard.current.shiftKey.IsPressed())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 public enum Direction
 {
     None,
@@ -17,17 +18,24 @@ public enum Direction
 public class PlayerMovement2D : MonoBehaviour
 {
     [SerializeField] PlayerInputReader inputReader;
+    [SerializeField] PlayerStamina playerStamina;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] float moveSpeed;
+    [SerializeField] float runSpeed;
     [SerializeField] Direction currentDirection = Direction.None;
     [SerializeField] Vector2 inputDirection = Vector2.zero;
-
+    [SerializeField] bool isRun;
+    private float currentSpeed;
     public Direction CurrentDirection => currentDirection;
+
+
     private void Awake()
     {
         if(inputReader == null) inputReader = GetComponent<PlayerInputReader>();
 
         if(rb == null) rb = GetComponent<Rigidbody2D>();
+
+        if(playerStamina == null) playerStamina = GetComponent<PlayerStamina>();
     }
 
     private void FixedUpdate()
@@ -37,12 +45,18 @@ public class PlayerMovement2D : MonoBehaviour
     private void Update()
     {
         inputDirection = inputReader != null ? inputReader.MoveDir : Vector2.zero;
+        isRun = Keyboard.current.leftShiftKey.IsPressed();
+
+        currentSpeed = isRun ? runSpeed : moveSpeed;
+
+        if (playerStamina.IsStaminaDepleted)
+            currentSpeed = moveSpeed * 0.5f;
         UpdateDirection();
     }
 
     void PlayerMove()
     {
-        rb.MovePosition(rb.position + inputReader.MoveDir * moveSpeed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + inputReader.MoveDir * currentSpeed * Time.fixedDeltaTime);
     }
 
     void UpdateDirection()

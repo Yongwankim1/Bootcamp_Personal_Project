@@ -26,6 +26,7 @@ public class ItemCatalogManager : MonoBehaviour
 
 
     private Dictionary<string,ItemData> itemIdByItemData = new Dictionary<string,ItemData>();
+    private Dictionary<string,ItemScriptable> itemIdByItemClass = new Dictionary<string,ItemScriptable>();
 
     private void Awake()
     {
@@ -58,6 +59,7 @@ public class ItemCatalogManager : MonoBehaviour
         for(int i = 0; i < list.Count; i++)
         {
             itemIdByItemData.Add(list[i].ItemData.ItemID, list[i].ItemData);
+            itemIdByItemClass.Add(list[i].ItemData.ItemID, list[i]);
         }
     }
     public bool IsRegisteredItem(string itemID)
@@ -68,10 +70,25 @@ public class ItemCatalogManager : MonoBehaviour
         }
         return false;
     }
+    public bool TryGetItemClass(string itemID, out ItemScriptable itemClass)
+    {
+        itemClass = default;
+        if (string.IsNullOrEmpty(itemID)) return false;
+
+        if (itemIdByItemClass.ContainsKey(itemID))
+        {
+            itemClass = itemIdByItemClass[itemID];
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
     public bool TryGetItemData(string itemID, out ItemData itemData)
     {
-        itemData = new ItemData();
+        itemData = default;
         if (string.IsNullOrEmpty(itemID)) return false;
         if (itemIdByItemData.ContainsKey(itemID))
         {

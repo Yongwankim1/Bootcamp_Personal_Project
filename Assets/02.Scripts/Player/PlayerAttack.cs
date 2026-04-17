@@ -5,6 +5,7 @@ public class PlayerAttack : MonoBehaviour
 {
     [Header("Ref")]
     [SerializeField] PlayerInputReader inputReader;
+    [SerializeField] PlayerStamina playerStamina;
     [SerializeField] ItemScriptable weapon;
 
     [SerializeField] private bool isAttack;
@@ -29,13 +30,14 @@ public class PlayerAttack : MonoBehaviour
         if (coolTime < nextCoolTime) return;
         if (weapon == null) return;
         if (weapon.ItemData.AttackType == AttackType.None) return;
-
+        if (!playerStamina.IsAttack) return;
         switch (weapon.ItemData.AttackType)
         {
             case AttackType.Melee: MeleeAttack(); break;
             case AttackType.Range: RangedAttack(); break;
         }
         nextCoolTime = Time.time + weapon.ItemData.AttackCoolDown;
+        playerStamina.AttackDecraseValue();
     }
 
     void MeleeAttack()

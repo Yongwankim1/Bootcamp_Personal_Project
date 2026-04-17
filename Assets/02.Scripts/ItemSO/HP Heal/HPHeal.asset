@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HPHeal
   m_EditorClassIdentifier: Assembly-CSharp::HPHealScriptable
   ItemData:
-    type: 6
+    type: 10
     worldItemPrefab: {fileID: 982663183785117636, guid: 01c744f5387fe664da4f9fc63645d241, type: 3}
     itemID: HPHeal01
     displayName: "\uC18C\uD615\uAD6C\uAE09\uC0C1\uC790"
@@ -21,7 +21,7 @@ MonoBehaviour:
       \uAD6C\uAE09\uC0C1\uC790"
     maxStack: 1
     itemIcon: {fileID: 1840292478, guid: 65af79529c4fba047ac6263f8a2126e8, type: 3}
-    value1: 0
+    value1: 20
     value2: 0
     damage: 0
     speed: 0

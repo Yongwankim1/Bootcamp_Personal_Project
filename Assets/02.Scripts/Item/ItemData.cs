@@ -3,12 +3,18 @@ public enum ItemType
 {
     None,
     //무기
+    Weapon,
     MeleeWeapon,
     RangeWeapon,
+
+    //가방
+    BackPack,
 
     //방어구
     Helmet,
     Body,
+    Pents,
+    Shoes,
 
     //총알
     Bullet,

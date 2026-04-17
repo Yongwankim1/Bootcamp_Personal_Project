@@ -35,11 +35,22 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
-        //Init();
+        Init();
     }
     private void OnEnable()
     {
-        Init();
+        if(PlayerInventoryData.Instance != null)
+        {
+            PlayerInventoryData.Instance.OnChangeBackpackData += Init;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (PlayerInventoryData.Instance != null)
+        {
+            PlayerInventoryData.Instance.OnChangeBackpackData -= Init;
+        }
     }
     protected void Init()
     {

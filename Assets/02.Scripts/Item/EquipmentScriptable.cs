@@ -7,6 +7,10 @@ public class EquipmentScriptable : ItemScriptable
     {
         if (PlayerBaseEquipment.Instance == null) return;
         Debug.Log(ItemData.ItemID);
+        if(ItemData.Type == ItemType.BackPack)
+        {
+
+        }
         PlayerBaseEquipment.Instance.Equip(ItemData.ItemID, out string backItemID);
         inventory.AddItem(backItemID, 1);
     }

@@ -408,11 +408,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab309bc6d3969e2479137f61dbbfbd4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  WeaponID: Weapon01
+  WeaponID: Weapon02
   HeadArmorID: 
   BodyArmorID: 
   ShoesArmorID: 
   PentsArmorID: 
+  BackPackID: BackPack05
 --- !u!114 &3874360626030423967
 MonoBehaviour:
   m_ObjectHideFlags: 0

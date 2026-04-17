@@ -10,8 +10,9 @@ public class PlayerBaseEquipment : MonoBehaviour
     public string ShoesArmorID;
     public string PentsArmorID;
     public string BackPackID;
-    public Action OnChangeEquip;
-    public Action OnChangeBackpack;
+    public event Action OnChangeEquip;
+    public event Action OnChangeBackpack;
+
     private void Awake()
     {
         if(Instance == null)
@@ -31,7 +32,11 @@ public class PlayerBaseEquipment : MonoBehaviour
         else if (index == 2) PentsArmorID = string.Empty;
         else if (index == 3) ShoesArmorID = string.Empty;
         else if (index == 4) WeaponID = string.Empty;
-        else if(index == 5) BackPackID = string.Empty;
+        else if (index == 5)
+        {
+            BackPackID = string.Empty;
+            OnChangeBackpack?.Invoke();
+        }
         OnChangeEquip?.Invoke();
     }
     public void Equip(string equipID, out string backItemID)
@@ -48,7 +53,7 @@ public class PlayerBaseEquipment : MonoBehaviour
             case ItemType.Body: backItemID = BodyArmorID; BodyArmorID = equipID; break;
             case ItemType.Pents: backItemID = PentsArmorID; PentsArmorID = equipID; break;
             case ItemType.Shoes: backItemID = ShoesArmorID; ShoesArmorID = equipID;break;
-            case ItemType.BackPack: backItemID = BackPackID; BackPackID = equipID; break;
+            case ItemType.BackPack: backItemID = BackPackID; BackPackID = equipID; OnChangeBackpack?.Invoke(); break;
         }
         OnChangeEquip?.Invoke();
     }

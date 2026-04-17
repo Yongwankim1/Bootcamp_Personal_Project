@@ -69806,12 +69806,8 @@ PrefabInstance:
       value: GameManager
       objectReference: {fileID: 0}
     - target: {fileID: 5861801724813134050, guid: bd557c8b308c3964ba248d2f2a0c3511, type: 3}
-      propertyPath: WeaponID
-      value: Weapon02
-      objectReference: {fileID: 0}
-    - target: {fileID: 5861801724813134050, guid: bd557c8b308c3964ba248d2f2a0c3511, type: 3}
       propertyPath: BackPackID
-      value: BackPack05
+      value: BackPack01
       objectReference: {fileID: 0}
     - target: {fileID: 8044153273165699177, guid: bd557c8b308c3964ba248d2f2a0c3511, type: 3}
       propertyPath: m_LocalPosition.x

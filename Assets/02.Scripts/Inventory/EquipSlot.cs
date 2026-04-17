@@ -11,7 +11,7 @@ public class EquipSlot : SlotUI
     {
         if(PlayerBaseEquipment.Instance != null)
         {
-            PlayerBaseEquipment.Instance.OnChangeArmor += Initialize;
+            PlayerBaseEquipment.Instance.OnChangeEquip += Initialize;
         }
         //Initialize();
     }
@@ -37,9 +37,8 @@ public class EquipSlot : SlotUI
             ItemType.Body => PlayerBaseEquipment.Instance.BodyArmorID,
             ItemType.Pents => PlayerBaseEquipment.Instance.PentsArmorID,
             ItemType.Shoes => PlayerBaseEquipment.Instance.ShoesArmorID,
-            ItemType.RangeWeapon => PlayerBaseEquipment.Instance.WeaponID,
-            ItemType.MeleeWeapon => PlayerBaseEquipment.Instance.WeaponID,
             ItemType.Weapon => PlayerBaseEquipment.Instance.WeaponID,
+            ItemType.BackPack => PlayerBaseEquipment.Instance.BackPackID,
             _ => string.Empty
         };
     }

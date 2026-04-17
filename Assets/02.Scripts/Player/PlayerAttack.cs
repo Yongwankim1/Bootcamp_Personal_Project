@@ -15,6 +15,32 @@ public class PlayerAttack : MonoBehaviour
 
     [SerializeField] float attackDistance;
     [SerializeField] LayerMask targetLayer;
+
+    private void Start()
+    {
+        Init();
+    }
+    private void OnEnable()
+    {
+        if (PlayerBaseEquipment.Instance == null) return;
+
+        PlayerBaseEquipment.Instance.OnChangeEquip += Init;
+    }
+    private void OnDisable()
+    {
+        if (PlayerBaseEquipment.Instance == null) return;
+
+        PlayerBaseEquipment.Instance.OnChangeEquip -= Init;
+    }
+    void Init()
+    {
+        weapon = null;
+        if (string.IsNullOrEmpty(PlayerBaseEquipment.Instance.WeaponID)) return;
+
+        if (!ItemCatalogManager.Instance.TryGetItemClass(PlayerBaseEquipment.Instance.WeaponID, out ItemScriptable item)) return;
+
+        weapon = item;
+    }
     private void Update()
     {
         if (inputReader == null) return;
@@ -29,7 +55,6 @@ public class PlayerAttack : MonoBehaviour
         if (!isAttack) return;
         if (coolTime < nextCoolTime) return;
         if (weapon == null) return;
-        if (weapon.ItemData.AttackType == AttackType.None) return;
         if (!playerStamina.IsAttack) return;
         switch (weapon.ItemData.AttackType)
         {

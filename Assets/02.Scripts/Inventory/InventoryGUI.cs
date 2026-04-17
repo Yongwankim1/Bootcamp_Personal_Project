@@ -10,6 +10,7 @@ public class InventoryGUI : MonoBehaviour
     [SerializeField] SlotUI slotUIPrefab;
 
     [SerializeField] GameObject enemyInventoryUI;
+    [SerializeField] Transform enemySlotParent;
     [SerializeField] EnemyInventory enemyInventory;
     [SerializeField] ItemSlotManager slotManager;
 
@@ -89,7 +90,7 @@ public class InventoryGUI : MonoBehaviour
         {
             if (enemySlots[i] == null)
             {
-                enemySlots[i] = Instantiate(slotUIPrefab, enemyInventoryUI.transform.GetChild(0).transform);
+                enemySlots[i] = Instantiate(slotUIPrefab, enemySlotParent);
             }
             enemySlots[i].Initialize(SlotType.Enemy, i);
         }
@@ -99,7 +100,13 @@ public class InventoryGUI : MonoBehaviour
             if (enemyInventory.DropList[index].IsCheck == false)
             {
                 enemySlots[index].OnCheck();
-                yield return new WaitForSeconds(enemyInventory.DropList[index].CheckTimer);
+                while(enemyInventory.DropList[index].CheckTimer >= 0.1f)
+                { 
+                    yield return null;
+                    DropTable temp = enemyInventory.DropList[index];
+                    temp.CheckTimer -= Time.deltaTime;
+                    enemyInventory.DropList[index] = temp;
+                }
                 DropTable dropTable = enemyInventory.DropList[index];
                 dropTable.IsCheck = true;
 

@@ -6,11 +6,12 @@ public class PlayerBaseEquipment : MonoBehaviour
     public static PlayerBaseEquipment Instance;
     public string WeaponID;
     public string HeadArmorID;
-    public string BodyArmorID { get; private set; }
-    public string ShoesArmorID { get; private set; }
-    public string PentsArmorID { get; private set; }
-
-    public Action OnChangeArmor;
+    public string BodyArmorID;
+    public string ShoesArmorID;
+    public string PentsArmorID;
+    public string BackPackID;
+    public Action OnChangeEquip;
+    public Action OnChangeBackpack;
     private void Awake()
     {
         if(Instance == null)
@@ -23,32 +24,32 @@ public class PlayerBaseEquipment : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public void UnEquipArmor(int index)
+    public void UnEquip(int index)
     {
         if (index == 0) HeadArmorID = string.Empty;
         else if (index == 1) BodyArmorID = string.Empty;
         else if (index == 2) PentsArmorID = string.Empty;
         else if (index == 3) ShoesArmorID = string.Empty;
         else if (index == 4) WeaponID = string.Empty;
-
-        OnChangeArmor?.Invoke();
+        else if(index == 5) BackPackID = string.Empty;
+        OnChangeEquip?.Invoke();
     }
-    public void SetArmor(string armorID, out string backItemID)
+    public void Equip(string equipID, out string backItemID)
     {
         backItemID = string.Empty;
         
-        ItemCatalogManager.Instance.TryGetItemData(armorID, out var data);
+        ItemCatalogManager.Instance.TryGetItemData(equipID, out var data);
 
 
         switch (data.Type)
         {
-            case ItemType.MeleeWeapon:
-            case ItemType.RangeWeapon: backItemID = WeaponID; WeaponID = armorID; break;
-            case ItemType.Helmet: backItemID = HeadArmorID; HeadArmorID = armorID; break;
-            case ItemType.Body: backItemID = BodyArmorID; BodyArmorID = armorID; break;
-            case ItemType.Pents: backItemID = PentsArmorID; PentsArmorID = armorID; break;
-            case ItemType.Shoes: backItemID = ShoesArmorID; ShoesArmorID = armorID;break;
+            case ItemType.Weapon: backItemID = WeaponID; WeaponID = equipID; break;
+            case ItemType.Helmet: backItemID = HeadArmorID; HeadArmorID = equipID; break;
+            case ItemType.Body: backItemID = BodyArmorID; BodyArmorID = equipID; break;
+            case ItemType.Pents: backItemID = PentsArmorID; PentsArmorID = equipID; break;
+            case ItemType.Shoes: backItemID = ShoesArmorID; ShoesArmorID = equipID;break;
+            case ItemType.BackPack: backItemID = BackPackID; BackPackID = equipID; break;
         }
-        OnChangeArmor?.Invoke();
+        OnChangeEquip?.Invoke();
     }
 }

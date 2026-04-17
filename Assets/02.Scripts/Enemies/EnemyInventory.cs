@@ -82,6 +82,17 @@ public class EnemyInventory : MonoBehaviour, IInteractable
     public void ListAddItem(string itemID, int amount)
     {
         DropTable item = default;
+        for (int i = 0; i < dropList.Count; i++)
+        {
+            if (!string.IsNullOrEmpty(dropList[i].DropItemID)) continue;
+            
+            item.DropItemID = itemID;
+            item.Amount = amount;
+            dropList[i] = item;
+            inventoryGUI.OnEnemyInventory(this);
+            return;
+            
+        }
         item.DropItemID = itemID;
         item.Amount = amount;
         dropList.Add(item);
@@ -89,7 +100,9 @@ public class EnemyInventory : MonoBehaviour, IInteractable
     }
     public void ListRemove(int index)
     {
-        dropList.RemoveAt(index);
+        DropTable item = new DropTable();
+        item.IsCheck = true;
+        dropList[index] = item;
         inventoryGUI.OnEnemyInventory(this);
     }
 }

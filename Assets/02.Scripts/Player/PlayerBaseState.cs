@@ -3,11 +3,16 @@ using UnityEngine;
 public class PlayerBaseState : MonoBehaviour
 {
     public static PlayerBaseState Instacne;
+    [Header("HP, Stamina State")]
     public float MaxHP;
     public float CurrentHP;
-    public float StaminaPoint;
-    public float CurrentStamina;
-    public float AttackDamage;
+    public float MaxStamina;
+    
+    [Header("SurivalState")]
+    public float Hydration;
+    public float MaxHydration;
+    public float hunger;
+    public float MaxHunger;
 
     private void Awake()
     {

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HPHeal
   m_EditorClassIdentifier: Assembly-CSharp::HPHealScriptable
   ItemData:
-    type: 10
+    type: 8
     worldItemPrefab: {fileID: 982663183785117636, guid: 01c744f5387fe664da4f9fc63645d241, type: 3}
     itemID: HPHeal01
     displayName: "\uC18C\uD615\uAD6C\uAE09\uC0C1\uC790"

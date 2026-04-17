@@ -77,9 +77,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   MaxHP: 100
   CurrentHP: 100
-  StaminaPoint: 100
-  CurrentStamina: 0
-  AttackDamage: 0
+  MaxStamina: 100
+  Hydration: 100
+  MaxHydration: 100
+  hunger: 100
+  MaxHunger: 100
 --- !u!114 &1531372167918526304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -406,8 +408,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab309bc6d3969e2479137f61dbbfbd4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  WeaponID: 
+  WeaponID: Weapon01
   HeadArmorID: 
+  BodyArmorID: 
+  ShoesArmorID: 
+  PentsArmorID: 
 --- !u!114 &3874360626030423967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -448,4 +453,6 @@ MonoBehaviour:
   - IsWaterRepair: 1
     IsPowerRepair: 1
     IsBossDie: 0
+  enemyLevelScriptables: []
   CurrentStage: 0
+  currentEnemyLevel: {fileID: 0}

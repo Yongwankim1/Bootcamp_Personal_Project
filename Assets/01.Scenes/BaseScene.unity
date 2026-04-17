@@ -2802,6 +2802,7 @@ MonoBehaviour:
   currentHP: 0
   maxHP: 0
   animator: {fileID: 0}
+  playerSurvival: {fileID: 0}
   equipHP: 0
 --- !u!224 &855952830 stripped
 RectTransform:
@@ -2860,6 +2861,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6985983555573245465, guid: 7d0525e1b8924e24b9aba8ae752dfca1, type: 3}
+      propertyPath: registeredMeleeWeaponData.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6985983555573245465, guid: 7d0525e1b8924e24b9aba8ae752dfca1, type: 3}
+      propertyPath: 'registeredMeleeWeaponData.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 769ad26f92d0de24aba28d039ce1ac3c, type: 2}
+    - target: {fileID: 6985983555573245465, guid: 7d0525e1b8924e24b9aba8ae752dfca1, type: 3}
+      propertyPath: 'registeredMeleeWeaponData.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 7504fb133cc61ce45b15686cc4ce9e77, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2982,8 +2995,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 1294208094}
     m_Modifications:
     - target: {fileID: 1882768657418598091, guid: f061327d1f66b6847affc2ed1e7bf4bd, type: 3}
+      propertyPath: equiType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1882768657418598091, guid: f061327d1f66b6847affc2ed1e7bf4bd, type: 3}
       propertyPath: slotType
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1882768657418598091, guid: f061327d1f66b6847affc2ed1e7bf4bd, type: 3}
+      propertyPath: SlotData.SlotIndex
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6370526964200794136, guid: f061327d1f66b6847affc2ed1e7bf4bd, type: 3}
       propertyPath: m_Name
@@ -3084,7 +3105,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1882768657418598091, guid: f061327d1f66b6847affc2ed1e7bf4bd, type: 3}
       propertyPath: equiType
-      value: 7
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1882768657418598091, guid: f061327d1f66b6847affc2ed1e7bf4bd, type: 3}
       propertyPath: slotType
@@ -3708,7 +3729,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1154413543
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4504,7 +4525,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1882768657418598091, guid: f061327d1f66b6847affc2ed1e7bf4bd, type: 3}
       propertyPath: equiType
-      value: 8
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1882768657418598091, guid: f061327d1f66b6847affc2ed1e7bf4bd, type: 3}
       propertyPath: slotType
@@ -5305,7 +5326,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1882768657418598091, guid: f061327d1f66b6847affc2ed1e7bf4bd, type: 3}
       propertyPath: equiType
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1882768657418598091, guid: f061327d1f66b6847affc2ed1e7bf4bd, type: 3}
       propertyPath: slotType
@@ -6679,7 +6700,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1882768657418598091, guid: f061327d1f66b6847affc2ed1e7bf4bd, type: 3}
       propertyPath: equiType
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1882768657418598091, guid: f061327d1f66b6847affc2ed1e7bf4bd, type: 3}
       propertyPath: slotType

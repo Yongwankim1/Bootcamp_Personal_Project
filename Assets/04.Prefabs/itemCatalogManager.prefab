@@ -44,12 +44,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5efaeedbdee0c704cabd00980f26df08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemCatalogManager
-  registeredMeleeWeaponData:
+  registeredWeaponData:
   - {fileID: 11400000, guid: 769ad26f92d0de24aba28d039ce1ac3c, type: 2}
-  registeredRangeWeaponData: []
+  - {fileID: 11400000, guid: 7504fb133cc61ce45b15686cc4ce9e77, type: 2}
+  registeredBackPackData:
+  - {fileID: 11400000, guid: 6d96c5e4fa7a3b4498cada85bc2290d7, type: 2}
+  - {fileID: 11400000, guid: 4581286cc83236b449ec14f85f3dc7d6, type: 2}
+  - {fileID: 11400000, guid: 2ad22eebdcc329c4fa28300462ea4410, type: 2}
+  - {fileID: 11400000, guid: 62379ba650be40b4d8fb4025e9c947a9, type: 2}
+  - {fileID: 11400000, guid: e615833cc2df01548be7f9c8f734bb04, type: 2}
   registeredHelmetData:
   - {fileID: 11400000, guid: 9d881132559a1384b89bcaa25ef46989, type: 2}
   registeredBodyData: []
+  registeredPentsData: []
+  registeredShoesData: []
   registeredBulletData: []
   registeredHPHealData:
   - {fileID: 11400000, guid: 5544db859dd3e984d8aade3333731989, type: 2}

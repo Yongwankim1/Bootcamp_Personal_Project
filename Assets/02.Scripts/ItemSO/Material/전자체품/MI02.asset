@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MI02
   m_EditorClassIdentifier: Assembly-CSharp::MaterialScriptable
   ItemData:
-    type: 15
+    type: 13
     worldItemPrefab: {fileID: 0}
     itemID: Material02
     displayName: "\uC804\uC120"

@@ -4,8 +4,6 @@ public enum ItemType
     None,
     //무기
     Weapon,
-    MeleeWeapon,
-    RangeWeapon,
 
     //가방
     BackPack,

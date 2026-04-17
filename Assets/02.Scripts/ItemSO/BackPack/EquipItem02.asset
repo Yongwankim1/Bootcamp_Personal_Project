@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 895c1dd856d33654690efb159e88f26a, type: 3}
-  m_Name: equipItem
+  m_Name: EquipItem02
   m_EditorClassIdentifier: Assembly-CSharp::EquipmentScriptable
   ItemData:
-    type: 5
+    type: 2
     worldItemPrefab: {fileID: 0}
-    itemID: head01
-    displayName: "\uAE30\uBCF8 \uBA38\uB9AC \uBC29\uC5B4\uAD6C"
-    description: "\uAE30\uBCF8 \uBA38\uB9AC \uBC29\uC5B4\uAD6C \uC785\uB2C8\uB2E4."
+    itemID: BackPack02
+    displayName: "\uC2A4\uD3EC\uCE20\uBC31"
+    description: "\uC606\uC73C\uB85C \uB9E4\uB294 \uAC00\uBC29"
     maxStack: 1
-    itemIcon: {fileID: 21300000, guid: 70d62c13f5845bf4a880c803a55346f4, type: 3}
-    value1: 10
+    itemIcon: {fileID: 1934933670143586136, guid: c4ce91ac1a06cf84d963f103662a18b0, type: 3}
+    value1: 20
     value2: 0
     damage: 0
     speed: 0

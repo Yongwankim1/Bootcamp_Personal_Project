@@ -80,7 +80,7 @@ public class ItemSlotManager : MonoBehaviour
                 if(inventory.RemainingBagCount() > 0)
                 {
                     inventory.AddItem(itemId,amount);
-                    PlayerBaseEquipment.Instance.UnEquipArmor(clickIndex);
+                    PlayerBaseEquipment.Instance.UnEquip(clickIndex);
                 }
                 break;
         }
@@ -142,32 +142,32 @@ public class ItemSlotManager : MonoBehaviour
             if (!IsVailedCheck(SelectDrag.ItemID, SelectDrop.ItemID)) return false;
 
             inventory.RemoveItem(SelectDrag.ItemID, SelectDrag.SlotIndex, SelectDrag.Amount);
-            PlayerBaseEquipment.Instance.SetArmor(SelectDrag.ItemID, out string backItemID);
+            PlayerBaseEquipment.Instance.Equip(SelectDrag.ItemID, out string backItemID);
             inventory.AddItem(backItemID, 1);
         }
         else if (DragType == SlotType.Equip && DropType == SlotType.Player)
         {
             if (!IsVailedCheck(SelectDrag.ItemID, SelectDrop.ItemID)) return false;
-            PlayerBaseEquipment.Instance.UnEquipArmor(SelectDrag.SlotIndex);
+            PlayerBaseEquipment.Instance.UnEquip(SelectDrag.SlotIndex);
             inventory.RemoveItem(SelectDrop.ItemID, SelectDrop.SlotIndex, SelectDrop.Amount);
-            PlayerBaseEquipment.Instance.SetArmor(SelectDrop.ItemID, out _);
+            PlayerBaseEquipment.Instance.Equip(SelectDrop.ItemID, out _);
             inventory.AddItem(SelectDrag.ItemID, 1, SelectDrop.SlotIndex);
         }
         else if (DragType == SlotType.Stash && DropType == SlotType.Equip)
         {
             if (!IsVailedCheck(SelectDrag.ItemID, SelectDrop.ItemID)) return false;
             playerStashUI.RemoveItemSlot(SelectDrag.SlotIndex);
-            PlayerBaseEquipment.Instance.SetArmor(SelectDrag.ItemID, out string backItemID);
+            PlayerBaseEquipment.Instance.Equip(SelectDrag.ItemID, out string backItemID);
             playerStashUI.DrawSlot(backItemID, 1, SelectDrag.SlotIndex);
         }
         else if (DragType == SlotType.Equip && DropType == SlotType.Stash)
         {
             if (!IsVailedCheck(SelectDrag.ItemID, SelectDrop.ItemID)) return false;
             //아이템 확인 먼저 필요
-            PlayerBaseEquipment.Instance.UnEquipArmor(SelectDrag.SlotIndex);
+            PlayerBaseEquipment.Instance.UnEquip(SelectDrag.SlotIndex);
             playerStashUI.RemoveItemSlot(SelectDrop.SlotIndex);
             playerStashUI.DrawSlot(SelectDrag.ItemID,1, SelectDrop.SlotIndex);
-            PlayerBaseEquipment.Instance.SetArmor(SelectDrop.ItemID, out _);
+            PlayerBaseEquipment.Instance.Equip(SelectDrop.ItemID, out _);
         }
         Initialize();
         return true;

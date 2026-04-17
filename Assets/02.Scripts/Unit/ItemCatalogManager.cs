@@ -1,16 +1,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[DefaultExecutionOrder(-998)]
 public class ItemCatalogManager : MonoBehaviour
 {
     public static ItemCatalogManager Instance;
 
     [Header("Weapon")]
-    [SerializeField] private List<ItemScriptable> registeredMeleeWeaponData = new List<ItemScriptable>();
-    [SerializeField] private List<ItemScriptable> registeredRangeWeaponData = new List<ItemScriptable>();
+    [SerializeField] private List<ItemScriptable> registeredWeaponData = new List<ItemScriptable>();
+    [Header("BackPack")]
+    [SerializeField] private List<ItemScriptable> registeredBackPackData = new List<ItemScriptable>();
+
     [Header("Armor")]
     [SerializeField] private List<ItemScriptable> registeredHelmetData = new List<ItemScriptable>();
     [SerializeField] private List<ItemScriptable> registeredBodyData = new List<ItemScriptable>();
+    [SerializeField] private List<ItemScriptable> registeredPentsData = new List<ItemScriptable>();
+    [SerializeField] private List<ItemScriptable> registeredShoesData = new List<ItemScriptable>();
+
     [Header("Bullet")]
     [SerializeField] private List<ItemScriptable> registeredBulletData = new List<ItemScriptable>();
     [Header("HealType")]
@@ -42,10 +48,12 @@ public class ItemCatalogManager : MonoBehaviour
     }
     private void Start()
     {
-        RegisterAddData(registeredMeleeWeaponData);
-        RegisterAddData(registeredRangeWeaponData);
+        RegisterAddData(registeredWeaponData);
+        RegisterAddData(registeredBackPackData);
         RegisterAddData(registeredHelmetData);
         RegisterAddData(registeredBodyData);
+        RegisterAddData(registeredPentsData);
+        RegisterAddData(registeredShoesData);
         RegisterAddData(registeredBulletData);
         RegisterAddData(registeredHPHealData);
         RegisterAddData(registeredBandageData);

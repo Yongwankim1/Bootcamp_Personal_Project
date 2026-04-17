@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PlayerHP : CharacterHP
 {
+    [SerializeField] PlayerSurvivalStat playerSurvival;
     [SerializeField] float equipHP;
     public float MaxHP => maxHP;
     public float CurrentHP => currentHP;
@@ -10,6 +11,12 @@ public class PlayerHP : CharacterHP
     private void Awake()
     {
         Initialize();
+    }
+    private void OnEnable()
+    {
+        if (playerSurvival == null) return;
+        playerSurvival.OnHungerDebuff += TakeDamage;
+        playerSurvival.OnHydrationDebuff += TakeDamage;
     }
     public override void TakeDamage(float amount)
     {
@@ -24,6 +31,7 @@ public class PlayerHP : CharacterHP
             maxHP = PlayerBaseState.Instacne.MaxHP;
             currentHP = PlayerBaseState.Instacne.CurrentHP;
         }
+        if(playerSurvival == null) playerSurvival = GetComponent<PlayerSurvivalStat>();
         currentHP = Mathf.Clamp(currentHP, 1, maxHP);
     }
 

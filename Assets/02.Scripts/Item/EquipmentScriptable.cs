@@ -7,7 +7,7 @@ public class EquipmentScriptable : ItemScriptable
     {
         if (PlayerBaseEquipment.Instance == null) return;
         Debug.Log(ItemData.ItemID);
-        PlayerBaseEquipment.Instance.SetArmor(ItemData.ItemID, out string backItemID);
+        PlayerBaseEquipment.Instance.Equip(ItemData.ItemID, out string backItemID);
         inventory.AddItem(backItemID, 1);
     }
 }

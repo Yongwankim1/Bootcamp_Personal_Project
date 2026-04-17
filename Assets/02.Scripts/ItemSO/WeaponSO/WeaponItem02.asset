@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd37eb192495d1c49b05732b15d98793, type: 3}
-  m_Name: WeaponItem
+  m_Name: WeaponItem02
   m_EditorClassIdentifier: Assembly-CSharp::WeaponScriptable
   ItemData:
     type: 1
     worldItemPrefab: {fileID: 0}
-    itemID: MeleeWeapon01
-    displayName: "\uC57C\uAD6C\uBC30\uD2B8"
-    description: "\uC57C\uAD6C\uBC30\uD2B8\uC785\uB2C8\uB2E4"
+    itemID: Weapon02
+    displayName: "\uC2DD\uCE7C"
+    description: "\uC2DD\uCE7C\uC785\uB2C8\uB2E4"
     maxStack: 1
-    itemIcon: {fileID: 0}
-    value1: 0
+    itemIcon: {fileID: -3263160663554243183, guid: 58a29eb2a7de20a46bd79edb971f40b4, type: 3}
+    value1: 3
     value2: 0
-    damage: 10
+    damage: 15
     speed: 0
     attackCoolDown: 0.3
-    weaponEffect: {fileID: 4663930729989868014, guid: 6a4a6fd94e0d8ad42a17c6eb304d8a1f, type: 3}
+    weaponEffect: {fileID: 5878242356000961166, guid: fce7a78c73ce1024db7ae9eaf30422fd, type: 3}
     weaponPrefab: {fileID: 0}
     attackType: 1

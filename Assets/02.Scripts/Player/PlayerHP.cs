@@ -5,34 +5,115 @@ public class PlayerHP : CharacterHP
 {
     [SerializeField] PlayerSurvivalStat playerSurvival;
     [SerializeField] float equipHP;
-    public float MaxHP => maxHP;
+
+    public float BaseMaxHP => baseMaxHP;
     public float CurrentHP => currentHP;
-    public event Action<float,float> OnChangeHP;
+
+    public event Action<float, float> OnChangeHP;
+
     private void Awake()
     {
         Initialize();
     }
+
     private void OnEnable()
     {
-        if (playerSurvival == null) return;
-        playerSurvival.OnHungerDebuff += TakeDamage;
-        playerSurvival.OnHydrationDebuff += TakeDamage;
+        if (playerSurvival != null)
+        {
+            playerSurvival.OnHungerDebuff += TakeDamage;
+            playerSurvival.OnHydrationDebuff += TakeDamage;
+        }
+
+        if (PlayerBaseEquipment.Instance != null)
+        {
+            PlayerBaseEquipment.Instance.OnChangeEquip += RefreshEquipHP;
+        }
     }
+
+    private void OnDisable()
+    {
+        if (playerSurvival != null)
+        {
+            playerSurvival.OnHungerDebuff -= TakeDamage;
+            playerSurvival.OnHydrationDebuff -= TakeDamage;
+        }
+
+        if (PlayerBaseEquipment.Instance != null)
+        {
+            PlayerBaseEquipment.Instance.OnChangeEquip -= RefreshEquipHP;
+        }
+
+        if (PlayerBaseState.Instacne != null)
+        {
+            PlayerBaseState.Instacne.BaseMaxHP = baseMaxHP;
+            PlayerBaseState.Instacne.CurrentHP = currentHP;
+            PlayerBaseState.Instacne.MaxHP = maxHP;
+            PlayerBaseState.Instacne.EquipHP = equipHP;
+        }
+    }
+
+    private void Initialize()
+    {
+        if (playerSurvival == null)
+            playerSurvival = GetComponent<PlayerSurvivalStat>();
+
+        if (PlayerBaseState.Instacne != null)
+        {
+            baseMaxHP = PlayerBaseState.Instacne.BaseMaxHP;
+            currentHP = PlayerBaseState.Instacne.CurrentHP;
+        }
+
+        RefreshEquipHP();
+    }
+
+    private float CalculateEquipHP()
+    {
+        float value = 0f;
+
+        if (PlayerBaseEquipment.Instance == null) return value;
+        if (ItemCatalogManager.Instance == null) return value;
+
+        if (ItemCatalogManager.Instance.TryGetItemData(PlayerBaseEquipment.Instance.HeadArmorID, out var headData))
+            value += headData.Value1;
+
+        if (ItemCatalogManager.Instance.TryGetItemData(PlayerBaseEquipment.Instance.BodyArmorID, out var bodyData))
+            value += bodyData.Value1;
+
+        if (ItemCatalogManager.Instance.TryGetItemData(PlayerBaseEquipment.Instance.PentsArmorID, out var pentsData))
+            value += pentsData.Value1;
+
+        if (ItemCatalogManager.Instance.TryGetItemData(PlayerBaseEquipment.Instance.ShoesArmorID, out var shoesData))
+            value += shoesData.Value1;
+
+        return value;
+    }
+
+    private void RefreshEquipHP()
+    {
+        float oldMaxHP = maxHP;
+
+        equipHP = CalculateEquipHP();
+        maxHP = baseMaxHP + equipHP;
+
+        if (oldMaxHP > 0f)
+        {
+            float ratio = currentHP / oldMaxHP;
+            currentHP = maxHP * ratio;
+        }
+        else
+        {
+            currentHP = maxHP;
+        }
+
+        currentHP = Mathf.Clamp(currentHP, 0f, maxHP);
+
+        OnChangeHP?.Invoke(maxHP, currentHP);
+    }
+
     public override void TakeDamage(float amount)
     {
         base.TakeDamage(amount);
-        OnChangeHP?.Invoke(maxHP,currentHP);
-    }
-    private void Initialize()
-    {
-        if (maxHP <= 0) maxHP = 1;
-        if (PlayerBaseState.Instacne != null)
-        {
-            maxHP = PlayerBaseState.Instacne.MaxHP;
-            currentHP = PlayerBaseState.Instacne.CurrentHP;
-        }
-        if(playerSurvival == null) playerSurvival = GetComponent<PlayerSurvivalStat>();
-        currentHP = Mathf.Clamp(currentHP, 1, maxHP);
+        OnChangeHP?.Invoke(maxHP, currentHP);
     }
 
     public override void Heal(int amount)
@@ -40,13 +121,7 @@ public class PlayerHP : CharacterHP
         base.Heal(amount);
         OnChangeHP?.Invoke(maxHP, currentHP);
     }
-    private void OnDisable()
-    {
-        if (PlayerBaseState.Instacne == null) return;
 
-        PlayerBaseState.Instacne.MaxHP = maxHP;
-        PlayerBaseState.Instacne.CurrentHP = currentHP;
-    }
     protected override void Died()
     {
         base.Died();

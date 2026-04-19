@@ -85,7 +85,7 @@ public class EnemyFSMController : MonoBehaviour
     private void Update()
     {
         if (currentState == EnemyState.Dead) return;
-        if(targetPos == null || (currentState == EnemyState.Chase))
+        if(targetPos == null)
         {
             TryFindTarget();
             return;
@@ -147,7 +147,7 @@ public class EnemyFSMController : MonoBehaviour
         
 
         float distanceToTarget = Vector2.Distance(transform.position, targetPos.position);
-        if (!CanSeeTarget() && CurrentState != EnemyState.Chase)
+        if (!CanSeeTarget())
         {
             TransitionTo(EnemyState.Idle);
             return;

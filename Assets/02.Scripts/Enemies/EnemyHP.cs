@@ -10,14 +10,14 @@ public class EnemyHP : CharacterHP
     }
     private void Initialize()
     {
-        if (maxHP <= 0) maxHP = 1;
-        currentHP = maxHP * levelScriptable.enemyData.hpMultiplier;
+        if (baseMaxHP <= 0) baseMaxHP = 1;
+        currentHP = baseMaxHP * levelScriptable.enemyData.hpMultiplier;
     }
 
     public void Initialize(EnemyLevelScriptable enemySO)
     {
         levelScriptable = enemySO;
-        currentHP = maxHP * enemySO.enemyData.hpMultiplier;
+        currentHP = baseMaxHP * enemySO.enemyData.hpMultiplier;
     }
 
     protected override void Died()

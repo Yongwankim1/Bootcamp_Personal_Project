@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 [DefaultExecutionOrder(-997)]
 public class PlayerInventoryData : MonoBehaviour
@@ -41,20 +42,61 @@ public class PlayerInventoryData : MonoBehaviour
             PlayerBaseEquipment.Instance.OnChangeBackpack -= SetBackPack;
         }
     }
+    public int CheckChangeItems()
+    {
+        int count = 0;
+
+        for(int i = 0; i < baseBackPack.Length; i++)
+        {
+            if (string.IsNullOrEmpty(baseBackPack[i].ItemID)) continue;
+
+            count++;
+        }
+
+        return count;
+    }
+    public bool CheckChangeItems(int amount)
+    {
+        int count = 0;
+
+        for (int i = 0; i < baseBackPack.Length; i++)
+        {
+            if (string.IsNullOrEmpty(baseBackPack[i].ItemID)) continue;
+
+            count++;
+        }
+
+        if(count >= amount)
+        {
+            return false;
+        }
+        return true;
+    }
+
     public void SetBackPack()
     {
-        if (!ItemCatalogManager.Instance.TryGetItemData(PlayerBaseEquipment.Instance.BackPackID, out var itemdata))
+        int amount = 8;
+        if (ItemCatalogManager.Instance.TryGetItemData(PlayerBaseEquipment.Instance.BackPackID, out var itemdata))
         {
-            Debug.Log("아이템 없음");
-            return;
+            amount = itemdata.Value1;
         }
-        ItemPositiones[] items = baseBackPack;
-        baseBackPack = new ItemPositiones[itemdata.Value1];
+        if (CheckChangeItems() > amount) return;
 
+        ItemPositiones[] items = baseBackPack;
+        baseBackPack = new ItemPositiones[amount];
+        List<ItemPositiones> itemlist = new List<ItemPositiones>();
         for (int i = 0; i < items.Length; i++)
         {
-            baseBackPack[i] = items[i];
+            if (string.IsNullOrEmpty(items[i].ItemID)) continue;
+
+            itemlist.Add(items[i]);
+        }
+        for(int i = 0; i < itemlist.Count; i++)
+        {
+            baseBackPack[i] = itemlist[i];
         }
         OnChangeBackpackData?.Invoke();
     }
+
+
 }

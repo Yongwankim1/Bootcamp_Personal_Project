@@ -1,6 +1,4 @@
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class ItemSlotManager : MonoBehaviour
 {
@@ -54,11 +52,15 @@ public class ItemSlotManager : MonoBehaviour
 
                 if (enemyInventory == null && playerStashUI == null)
                 {
-                    Debug.Log("리턴됨");
+                    if (!inventory.RemoveItem(itemId, clickIndex, amount)) return;
+                    if (!PlayerBaseEquipment.Instance.Equip(itemId, out string backItemID)) return;
+                    inventory.AddItem(backItemID, 1);
+                    Initialize();
                     return;
                 }
                 if (!inventory.RemoveItem(itemId, clickIndex, amount))
                 {
+                    Debug.Log("삭제 못함");
                     Initialize();
                     return;
                 }
@@ -66,7 +68,7 @@ public class ItemSlotManager : MonoBehaviour
                 {
                     playerStashUI.AddItemSlot(itemId, amount);
                 }
-                else
+                else if(enemyInventory && !playerStashUI)
                     enemyInventory.ListAddItem(itemId, amount);
                 break;
             case SlotType.Stash:
@@ -79,8 +81,10 @@ public class ItemSlotManager : MonoBehaviour
             case SlotType.Equip:
                 if(inventory.RemainingBagCount() > 0)
                 {
-                    inventory.AddItem(itemId,amount);
-                    PlayerBaseEquipment.Instance.UnEquip(clickIndex);
+                    if (!PlayerBaseEquipment.Instance.UnEquip(clickIndex)) return;
+
+                    inventory.AddItem(itemId, amount);
+
                 }
                 break;
         }
@@ -142,16 +146,20 @@ public class ItemSlotManager : MonoBehaviour
             if (!IsVailedCheck(SelectDrag.ItemID, SelectDrop.ItemID)) return false;
 
             inventory.RemoveItem(SelectDrag.ItemID, SelectDrag.SlotIndex, SelectDrag.Amount);
-            PlayerBaseEquipment.Instance.Equip(SelectDrag.ItemID, out string backItemID);
+            if(!PlayerBaseEquipment.Instance.Equip(SelectDrag.ItemID, out string backItemID)) return false;
             inventory.AddItem(backItemID, 1);
         }
         else if (DragType == SlotType.Equip && DropType == SlotType.Player)
         {
             if (!IsVailedCheck(SelectDrag.ItemID, SelectDrop.ItemID)) return false;
-            PlayerBaseEquipment.Instance.UnEquip(SelectDrag.SlotIndex);
+            if(!PlayerBaseEquipment.Instance.UnEquip(SelectDrag.SlotIndex)) return false;
             inventory.RemoveItem(SelectDrop.ItemID, SelectDrop.SlotIndex, SelectDrop.Amount);
             PlayerBaseEquipment.Instance.Equip(SelectDrop.ItemID, out _);
-            inventory.AddItem(SelectDrag.ItemID, 1, SelectDrop.SlotIndex);
+
+            if (!ItemCatalogManager.Instance.TryGetItemData(SelectDrag.ItemID, out var dragData)) return false;
+
+            if (dragData.Type != ItemType.BackPack) inventory.AddItem(SelectDrag.ItemID, 1, SelectDrop.SlotIndex);
+            else inventory.AddItem(SelectDrag.ItemID, 1);
         }
         else if (DragType == SlotType.Stash && DropType == SlotType.Equip)
         {
@@ -164,7 +172,7 @@ public class ItemSlotManager : MonoBehaviour
         {
             if (!IsVailedCheck(SelectDrag.ItemID, SelectDrop.ItemID)) return false;
             //아이템 확인 먼저 필요
-            PlayerBaseEquipment.Instance.UnEquip(SelectDrag.SlotIndex);
+            if(!PlayerBaseEquipment.Instance.UnEquip(SelectDrag.SlotIndex)) return false;
             playerStashUI.RemoveItemSlot(SelectDrop.SlotIndex);
             playerStashUI.DrawSlot(SelectDrag.ItemID,1, SelectDrop.SlotIndex);
             PlayerBaseEquipment.Instance.Equip(SelectDrop.ItemID, out _);

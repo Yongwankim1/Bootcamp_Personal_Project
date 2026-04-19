@@ -169,6 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7897c12a8fdc7ce46af70bcce74eb36e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  facilityName: "\uC804\uAE30\uC2DC\uC124"
   requirementMaterials:
     ItemID:
     - Material01
@@ -212,7 +213,7 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: 0.06849973, y: 1.1470871}
+  - {x: 0.06964477, y: 1.136764}
   - {x: -0.10737004, y: 1.2515805}
   - {x: -0.23631634, y: 1.2145507}
   - {x: -0.37985063, y: 0.8667624}
@@ -224,10 +225,11 @@ EdgeCollider2D:
   - {x: 0.32223174, y: 0.60464346}
   - {x: 0.228841, y: 0.6916537}
   - {x: 0.065497085, y: 0.64370674}
-  - {x: 0.069483586, y: 1.1304755}
+  - {x: 0.076628275, y: 1.1130286}
+  - {x: 0.06998236, y: 1.1366235}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentStartPoint: 1
   m_UseAdjacentEndPoint: 0
 --- !u!50 &8912122020677773716
 Rigidbody2D:

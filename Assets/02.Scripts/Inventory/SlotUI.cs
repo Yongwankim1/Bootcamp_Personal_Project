@@ -32,6 +32,7 @@ public class SlotUI : MonoBehaviour
     private void Awake()
     {
         if(animator == null)  animator = GetComponent<Animator>();
+        if(iconImage == null) iconImage = GetComponentInChildren<Image>();
         isCheckHash = Animator.StringToHash(isCheckParameterName);
     }
     public void Initialize(SlotType type, int index)

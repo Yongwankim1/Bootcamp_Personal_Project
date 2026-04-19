@@ -209,6 +209,15 @@ public class PlayerStamina : MonoBehaviour
             if(currentStamina >= maxStamina / 2)
             {
                 IsStaminaDepleted = false;
+                if (staminaIncrease == null)
+                {
+                    staminaIncrease = StartCoroutine(IncreaseCurrentStamina(inCreaseValue));
+                }
+                else
+                {
+                    StopCoroutine(staminaIncrease);
+                    staminaIncrease = StartCoroutine(IncreaseCurrentStamina(inCreaseValue));
+                }
                 yield break;
             }
             yield return null;

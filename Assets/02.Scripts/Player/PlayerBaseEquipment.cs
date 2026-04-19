@@ -25,7 +25,7 @@ public class PlayerBaseEquipment : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public void UnEquip(int index)
+    public bool UnEquip(int index)
     {
         if (index == 0) HeadArmorID = string.Empty;
         else if (index == 1) BodyArmorID = string.Empty;
@@ -34,18 +34,24 @@ public class PlayerBaseEquipment : MonoBehaviour
         else if (index == 4) WeaponID = string.Empty;
         else if (index == 5)
         {
+            if (!PlayerInventoryData.Instance.CheckChangeItems(8)) return false;
+
             BackPackID = string.Empty;
             OnChangeBackpack?.Invoke();
         }
         OnChangeEquip?.Invoke();
+        return true;
     }
-    public void Equip(string equipID, out string backItemID)
+    public bool Equip(string equipID, out string backItemID)
     {
         backItemID = string.Empty;
         
         ItemCatalogManager.Instance.TryGetItemData(equipID, out var data);
 
-
+        if(data.Type == ItemType.BackPack)
+        {
+            if (!PlayerInventoryData.Instance.CheckChangeItems(data.Value1)) return false;
+        }
         switch (data.Type)
         {
             case ItemType.Weapon: backItemID = WeaponID; WeaponID = equipID; break;
@@ -56,5 +62,6 @@ public class PlayerBaseEquipment : MonoBehaviour
             case ItemType.BackPack: backItemID = BackPackID; BackPackID = equipID; OnChangeBackpack?.Invoke(); break;
         }
         OnChangeEquip?.Invoke();
+        return true;
     }
 }

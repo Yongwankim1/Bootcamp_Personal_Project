@@ -9,7 +9,7 @@ public class EquipmentScriptable : ItemScriptable
         Debug.Log(ItemData.ItemID);
         if(ItemData.Type == ItemType.BackPack)
         {
-
+            if (!PlayerInventoryData.Instance.CheckChangeItems(ItemData.Value1)) return;
         }
         PlayerBaseEquipment.Instance.Equip(ItemData.ItemID, out string backItemID);
         inventory.AddItem(backItemID, 1);

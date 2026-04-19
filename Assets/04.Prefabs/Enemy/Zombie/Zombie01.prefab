@@ -230,6 +230,11 @@ MonoBehaviour:
     CheckTimer: 3
     IsCheck: 0
     Percent: 1
+  - DropItemID: HPHeal01
+    Amount: 1
+    CheckTimer: 3
+    IsCheck: 0
+    Percent: 1
   enemyHP: {fileID: 2826630650267862268}
   myColider2D: {fileID: 0}
   dropList: []
@@ -247,7 +252,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHP
   currentHP: 100
-  maxHP: 10
+  baseMaxHP: 100
+  maxHP: 100
   animator: {fileID: 9020888119294751428}
   levelScriptable: {fileID: 11400000, guid: b03a08863c9d3914ab2b5f55ae4e14b4, type: 2}
 --- !u!58 &5682240106979245573

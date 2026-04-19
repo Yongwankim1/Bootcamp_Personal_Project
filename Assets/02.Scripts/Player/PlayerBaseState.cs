@@ -4,6 +4,8 @@ public class PlayerBaseState : MonoBehaviour
 {
     public static PlayerBaseState Instacne;
     [Header("HP, Stamina State")]
+    public float BaseMaxHP;
+    public float EquipHP;
     public float MaxHP;
     public float CurrentHP;
     public float MaxStamina;

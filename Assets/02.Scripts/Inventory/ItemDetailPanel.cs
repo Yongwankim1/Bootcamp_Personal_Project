@@ -80,8 +80,8 @@ public class ItemDetailPanel : MonoBehaviour
                 //TODO:: 장비해체
                 if (inventory.RemainingBagCount() <= 0) return;
 
-                PlayerBaseEquipment.Instance.UnEquip(Index);
-                inventory.AddItem(itemID, 1);
+                if(inventory.AddItem(itemID, 1) > 0) return;
+                if(!PlayerBaseEquipment.Instance.UnEquip(Index)) return;
             }
             currentSlotType = SlotType.None;
             gameObject.SetActive(false);

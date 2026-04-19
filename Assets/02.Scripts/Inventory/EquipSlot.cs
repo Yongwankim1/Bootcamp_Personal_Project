@@ -15,8 +15,16 @@ public class EquipSlot : SlotUI
         }
         //Initialize();
     }
+    private void OnDisable()
+    {
+        if (PlayerBaseEquipment.Instance != null)
+        {
+            PlayerBaseEquipment.Instance.OnChangeEquip -= Initialize;
+        }
+    }
     void Initialize()
     {
+        if (iconImage == null) return;
         if (PlayerBaseEquipment.Instance == null || ItemCatalogManager.Instance == null) return;
         iconImage.enabled = false;
         SlotData.ItemID = GetData();

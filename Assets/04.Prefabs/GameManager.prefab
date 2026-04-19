@@ -75,6 +75,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12dc1ce92a58e07498b8c192a91b4e32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  BaseMaxHP: 100
+  EquipHP: 0
   MaxHP: 100
   CurrentHP: 100
   MaxStamina: 100
@@ -408,12 +410,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab309bc6d3969e2479137f61dbbfbd4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  WeaponID: Weapon02
+  WeaponID: Weapon01
   HeadArmorID: 
   BodyArmorID: 
   ShoesArmorID: 
   PentsArmorID: 
-  BackPackID: BackPack05
+  BackPackID: BackPack01
 --- !u!114 &3874360626030423967
 MonoBehaviour:
   m_ObjectHideFlags: 0

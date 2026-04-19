@@ -42,6 +42,7 @@ public class Inventory : MonoBehaviour
         if(PlayerInventoryData.Instance != null)
         {
             PlayerInventoryData.Instance.OnChangeBackpackData += Init;
+
         }
     }
 
@@ -57,6 +58,7 @@ public class Inventory : MonoBehaviour
         if(PlayerInventoryData.Instance != null)
         {
             itemIdByCount.Clear();
+            backpackID = PlayerBaseEquipment.Instance.BackPackID;
             itemPositiones = PlayerInventoryData.Instance.BaseBackPack;
             for(int i =0; i < itemPositiones.Length; i++)
             {
@@ -75,8 +77,6 @@ public class Inventory : MonoBehaviour
         {
             itemPositiones = new ItemPositiones[8];
         }
-        //AddItem("head01", 2);
-
         RaiseOnBackPackChange();
     }
     public void Init(string backpackID)
@@ -293,7 +293,7 @@ public class Inventory : MonoBehaviour
             itemPositiones[index] = default;
         }
 
-
+        Debug.Log("Á¦°ÅµÊ");
         RaiseOnChanageItem();
         return true;
     }

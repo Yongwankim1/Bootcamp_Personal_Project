@@ -4,6 +4,7 @@ using UnityEngine;
 public class CharacterHP : MonoBehaviour, IDamageable
 {
     [SerializeField] protected float currentHP;
+    [SerializeField] protected float baseMaxHP;
     [SerializeField] protected float maxHP;
     [SerializeField] Animator animator;
 

@@ -27,4 +27,9 @@ public class BaseSceneBtnManager : MonoBehaviour
     {
         SceneManager.LoadScene(sceneName);
     }
+
+    public void OnGameExit()
+    {
+        Application.Quit();
+    }
 }

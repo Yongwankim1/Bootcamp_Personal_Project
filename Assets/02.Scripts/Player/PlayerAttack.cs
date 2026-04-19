@@ -18,6 +18,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void Start()
     {
+        if (PlayerBaseEquipment.Instance == null) return;
         Init();
     }
     private void OnEnable()

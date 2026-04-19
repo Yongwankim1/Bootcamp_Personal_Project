@@ -45,13 +45,19 @@ public class EnemyFSMController : MonoBehaviour
     }
     private void OnEnable()
     {
-        if (enemyHP != null) enemyHP.OnDied += HandleDead;
-        enemyHP.OnHit += ApplyStun;
+        if (enemyHP != null)
+        {
+            enemyHP.OnDied += HandleDead;
+            enemyHP.OnHit += ApplyStun;
+        }
     }
     private void OnDisable()
     {
-        if(enemyHP != null) enemyHP.OnDied -= HandleDead;
-        enemyHP.OnHit -= ApplyStun;
+        if (enemyHP != null)
+        {
+            enemyHP.OnDied -= HandleDead;
+            enemyHP.OnHit -= ApplyStun;
+        }
     }
     private void TransitionTo(EnemyState nextState)
     {

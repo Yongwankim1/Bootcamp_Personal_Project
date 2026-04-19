@@ -71,12 +71,12 @@ public class PlayerMovement2D : MonoBehaviour
         if (inputX > deadZoneValue)
         {
             if (inputY > deadZoneValue) currentDirection = Direction.RightUP;
-            else if (inputY < -1 * deadZoneValue) currentDirection = Direction.LeftUP;
+            else if (inputY < -1 * deadZoneValue) currentDirection = Direction.RightDown;
             else currentDirection = Direction.Right;
         }
         else if (inputX < -1 * deadZoneValue)
         {
-            if (inputY > deadZoneValue) currentDirection = Direction.RightDown;
+            if (inputY > deadZoneValue) currentDirection = Direction.LeftUP;
             else if (inputY < -1 * deadZoneValue) currentDirection = Direction.LeftDown;
             else currentDirection = Direction.Left;
         }
